@@ -918,7 +918,7 @@ Mappings
 ========
 
 You declare mapping types with the syntax ``mapping(_KeyType => _ValueType)``.
-The ``_KeyType`` can be any elementary type except for a contracts, enums,
+The ``_KeyType`` can be any type except for contracts, enums,
 structs or arrays, but dynamically-sized byte arrays and strings are fine.
 ``_ValueType`` can be any type, including mappings.
 
@@ -927,13 +927,13 @@ such that every possible key exists and is mapped to a value whose
 byte-representation is all zeros, a type's :ref:`default value <default-value>`. The similarity ends there, the key data is not stored in a
 mapping, only its ``keccak256`` hash is used to look up the value.
 
-Because of this, mappings do not have a length or a concept of setting a key or
-value.
+Because of this, mappings do not have a length or a concept of a key or
+value being set.
 
 Mappings are **only** allowed for state variables (or as storage reference types
 in internal functions).
 
-It is possible to mark mappings ``public`` and Solidity creates a :ref:`getter <visibility-and-getters>` for you. The ``_KeyType`` becomes a required
+If ``_ValueType`` isn't an array or mapping, it is possible to mark mappings ``public`` and Solidity creates a :ref:`getter <visibility-and-getters>` for you. The ``_KeyType`` becomes a required
 parameter for the getter and it returns ``_ValueType``.
 
 If ``_ValueType`` is an array or a mapping, the getter has one parameter for
