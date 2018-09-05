@@ -1259,7 +1259,7 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 				identifier = FunctionType(*function).externalIdentifier();
 			else
 				solAssert(false, "Contract member is neither variable nor function.");
-			utils().convertType(type, AddressType(), true);
+			utils().convertType(type, AddressType(StateMutability::NonPayable), true);
 			m_context << identifier;
 		}
 		else
@@ -1277,7 +1277,7 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 		{
 			utils().convertType(
 				*_memberAccess.expression().annotation().type,
-				AddressType(),
+				AddressType(StateMutability::NonPayable),
 				true
 			);
 			m_context << Instruction::BALANCE;
@@ -1285,7 +1285,7 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 		else if ((set<string>{"send", "transfer", "call", "callcode", "delegatecall", "staticcall"}).count(member))
 			utils().convertType(
 				*_memberAccess.expression().annotation().type,
-				AddressType(),
+				AddressType(StateMutability::NonPayable),
 				true
 			);
 		else

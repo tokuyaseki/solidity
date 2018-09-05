@@ -2233,11 +2233,11 @@ BOOST_AUTO_TEST_CASE(transfer_ether)
 	char const* sourceCode = R"(
 		contract A {
 			constructor() public payable {}
-			function a(address addr, uint amount) public returns (uint) {
+			function a(address payable addr, uint amount) public returns (uint) {
 				addr.transfer(amount);
 				return address(this).balance;
 			}
-			function b(address addr, uint amount) public {
+			function b(address payable addr, uint amount) public {
 				addr.transfer(amount);
 			}
 		}
@@ -12446,7 +12446,7 @@ BOOST_AUTO_TEST_CASE(interface_contract)
 		}
 
 		contract C {
-			function f(address _interfaceAddress) public returns (bool) {
+			function f(address payable _interfaceAddress) public returns (bool) {
 				I i = I(_interfaceAddress);
 				return i.f();
 			}

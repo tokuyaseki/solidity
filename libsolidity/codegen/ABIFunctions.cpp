@@ -242,7 +242,7 @@ string ABIFunctions::cleanupFunction(Type const& _type, bool _revertOnFailure)
 			break;
 		}
 		case Type::Category::Contract:
-			templ("body", "cleaned := " + cleanupFunction(AddressType()) + "(value)");
+			templ("body", "cleaned := " + cleanupFunction(AddressType(StateMutability::NonPayable)) + "(value)");
 			break;
 		case Type::Category::Enum:
 		{
