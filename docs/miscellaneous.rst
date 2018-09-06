@@ -1,4 +1,4 @@
-©#############
+#############
 Miscellaneous
 #############
 
@@ -168,14 +168,13 @@ These steps are applied to each basic block and the newly generated code is used
     else
       return 1;
 
-The process simplifies to code which can also be compiled from:
+Still simplifies to code which you can compile even though the instructions contained 
+a jump in the beginning of the process:
 
 ::
 
     data[7] = 9;
     return 1;
-
-Even though the instructions contained a jump in the beginning.
 
 .. index:: source mappings
 
