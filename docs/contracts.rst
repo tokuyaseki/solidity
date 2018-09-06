@@ -334,7 +334,7 @@ inheritable properties of contracts and may be overridden by derived contracts.
 
     contract owned {
         constructor() public { owner = msg.sender; }
-        address owner;
+        address payable owner;
 
         // This contract only defines a modifier but does not use
         // it: it will be used in derived contracts.
@@ -891,7 +891,7 @@ Details are given in the following example.
 
     contract owned {
         constructor() public { owner = msg.sender; }
-        address owner;
+        address payable owner;
     }
 
     // Use `is` to derive from another contract. Derived
@@ -963,7 +963,7 @@ seen in the following example::
 
     contract owned {
         constructor() public { owner = msg.sender; }
-        address owner;
+        address payable owner;
     }
 
     contract mortal is owned {
@@ -992,7 +992,7 @@ derived override, but this function will bypass
 
     contract owned {
         constructor() public { owner = msg.sender; }
-        address owner;
+        address payable owner;
     }
 
     contract mortal is owned {

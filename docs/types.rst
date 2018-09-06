@@ -860,7 +860,7 @@ shown in the following example:
         }
 
         struct Campaign {
-            address beneficiary;
+            address payable beneficiary;
             uint fundingGoal;
             uint numFunders;
             uint amount;
@@ -870,7 +870,7 @@ shown in the following example:
         uint numCampaigns;
         mapping (uint => Campaign) campaigns;
 
-        function newCampaign(address beneficiary, uint goal) public returns (uint campaignID) {
+        function newCampaign(address payable beneficiary, uint goal) public returns (uint campaignID) {
             campaignID = numCampaigns++; // campaignID is return variable
             // Creates new struct and saves in storage. We leave out the mapping type.
             campaigns[campaignID] = Campaign(beneficiary, goal, 0, 0);
