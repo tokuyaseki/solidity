@@ -2215,7 +2215,7 @@ BOOST_AUTO_TEST_CASE(send_ether)
 	char const* sourceCode = R"(
 		contract test {
 			constructor() payable public {}
-			function a(address addr, uint amount) public returns (uint ret) {
+			function a(address payable addr, uint amount) public returns (uint ret) {
 				addr.send(amount);
 				return address(this).balance;
 			}
@@ -7151,7 +7151,7 @@ BOOST_AUTO_TEST_CASE(failing_send)
 		}
 		contract Main {
 			constructor() public payable {}
-			function callHelper(address _a) public returns (bool r, uint bal) {
+			function callHelper(address payable _a) public returns (bool r, uint bal) {
 				r = !_a.send(5);
 				bal = address(this).balance;
 			}
@@ -8838,7 +8838,7 @@ BOOST_AUTO_TEST_CASE(reject_ether_sent_to_library)
 		library lib {}
 		contract c {
 			constructor() public payable {}
-			function f(address x) public returns (bool) {
+			function f(address payable x) public returns (bool) {
 				return x.send(1);
 			}
 			function () external payable {}
