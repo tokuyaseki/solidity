@@ -340,6 +340,18 @@ TypePointer Type::fromElementaryTypeName(string const& _name)
 		}
 		return ref->copyForLocation(location, true);
 	}
+	else if (t->category() == Type::Category::Address)
+	{
+		StateMutability stateMutability = StateMutability::NonPayable;
+		if (nameParts.size() == 2)
+		{
+			if (nameParts[1] == "payable")
+				stateMutability = StateMutability::Payable;
+			else
+				solAssert(false, "Invalid state mutability for address type: " + nameParts[1]);
+		}
+		return AddressType::copyForMutabilityIfAddress(stateMutability, t);
+	}
 	else
 	{
 		solAssert(nameParts.size() == 1, "Storage location suffix only allowed for reference types");

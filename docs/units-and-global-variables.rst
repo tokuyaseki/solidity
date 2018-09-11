@@ -204,10 +204,10 @@ Contract Related
 ``this`` (current contract's type):
     the current contract, explicitly convertible to :ref:`address`
 
-``selfdestruct(address recipient)``:
+``selfdestruct(address payable recipient)``:
     destroy the current contract, sending its funds to the given :ref:`address`
 
-``suicide(address recipient)``:
+``suicide(address payable recipient)``:
     deprecated alias to ``selfdestruct``
 
 Furthermore, all functions of the current contract are callable directly including the current function.

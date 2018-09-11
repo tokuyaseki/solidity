@@ -2406,7 +2406,7 @@ BOOST_AUTO_TEST_CASE(selfdestruct)
 	char const* sourceCode = R"(
 		contract test {
 			constructor() public payable {}
-			function a(address receiver) public returns (uint ret) {
+			function a(address payable receiver) public returns (uint ret) {
 				selfdestruct(receiver);
 				return 10;
 			}
