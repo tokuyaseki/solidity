@@ -10095,6 +10095,54 @@ BOOST_AUTO_TEST_CASE(cleanup_bytes_types_shortening)
 	ABI_CHECK(callContractFunction("f()"), encodeArgs("\xff\xff\xff\xff"));
 }
 
+BOOST_AUTO_TEST_CASE(cleanup_address_types)
+{
+	// Checks that address types are properly cleaned before they are compared.
+	char const* sourceCode = R"(
+		contract C {
+			function f(address a) public returns (uint) {
+				if (a != 0x1234567890123456789012345678901234567890) return 1;
+				return 0;
+			}
+			function g(address payable a) public returns (uint) {
+				if (a != 0x1234567890123456789012345678901234567890) return 1;
+				return 0;
+			}
+		}
+	)";
+	compileAndRun(sourceCode, 0, "C");
+	// We input longer data on purpose.
+	ABI_CHECK(callContractFunction("f(address)", u256("0xFFFF1234567890123456789012345678901234567890")), encodeArgs(0));
+	ABI_CHECK(callContractFunction("g(address)", u256("0xFFFF1234567890123456789012345678901234567890")), encodeArgs(0));
+}
+
+BOOST_AUTO_TEST_CASE(cleanup_address_types_shortening)
+{
+	char const* sourceCode = R"(
+		contract C {
+			function f() public pure returns (address r) {
+				bytes21 x = 0x1122334455667788990011223344556677889900ff;
+				bytes20 y;
+				assembly { y := x }
+				address z = address(y);
+				assembly { r := z }
+				require(z == 0x1122334455667788990011223344556677889900);
+			}
+			function g() public pure returns (address payable r) {
+				bytes21 x = 0x1122334455667788990011223344556677889900ff;
+				bytes20 y;
+				assembly { y := x }
+				address payable z = address(y);
+				assembly { r := z }
+				require(z == 0x1122334455667788990011223344556677889900);
+			}
+		}
+	)";
+	compileAndRun(sourceCode, 0, "C");
+	ABI_CHECK(callContractFunction("f()"), encodeArgs(u256("0x1122334455667788990011223344556677889900")));
+	ABI_CHECK(callContractFunction("g()"), encodeArgs(u256("0x1122334455667788990011223344556677889900")));
+}
+
 BOOST_AUTO_TEST_CASE(skip_dynamic_types)
 {
 	// The EVM cannot provide access to dynamically-sized return values, so we have to skip them.
